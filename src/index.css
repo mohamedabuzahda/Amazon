@@ -3,7 +3,13 @@
 @tailwind utilities;
 
 
+.touch {
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+
 .touch:hover {
+ silvana-homepage
     border: 1px solid;
     border-radius: 3px;
 }
@@ -22,3 +28,16 @@
   background: transparent;
   border-radius: 23px;
 }
+=======
+  border-color: white;
+}
+
+.scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+ main
