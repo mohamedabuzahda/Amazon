@@ -7,3 +7,18 @@
     border: 1px solid;
     border-radius: 3px;
 }
+/* Custom Scrollbar for Slider */
+.slider-scrollbar::-webkit-scrollbar {
+  height: 5px;
+  width: 450px;
+}
+
+.slider-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #8d8d8d;
+  border-radius: 23px;
+}
+
+.slider-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 23px;
+}
