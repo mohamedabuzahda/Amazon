@@ -25,9 +25,7 @@ const NavbarBanner = () => {
       </div>
 
       {/* القائمة نفسها */}
-      <div
-        className="flex flex-row items-center gap-4 whitespace-nowrap overflow-x-auto scroll-smooth snap-x snap-mandatory  scroll-hide"
-      >
+      <div className="flex flex-row items-center gap-4 whitespace-nowrap overflow-x-auto scroll-smooth snap-x snap-mandatory  scroll-hide">
         {list.map((item, index) => (
           <p
             key={index}
