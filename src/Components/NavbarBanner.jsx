@@ -17,7 +17,7 @@ const list = [
 
 const NavbarBanner = () => {
   return (
-    <div className="bg-[#232f3e] text-white h-10 px-2 flex items-center gap-2 scroll-hide">
+    <div className="bg-[#232f3e] text-white h-10 px-2 flex items-center gap-2">
       {/* زرار All */}
       <div className="flex items-center gap-1 px-3 py-1 cursor-pointer touch border border-transparent hover:border-white rounded-[3px] shrink-0">
         <IoMenuSharp className="text-xl" />
@@ -26,7 +26,7 @@ const NavbarBanner = () => {
 
       {/* القائمة نفسها */}
       <div
-        className="flex flex-row items-center gap-4 whitespace-nowrap scroll-smooth snap-x snap-mandatory scrollbar-hide"
+        className="flex flex-row items-center gap-4 whitespace-nowrap overflow-x-auto scroll-smooth snap-x snap-mandatory  scroll-hide"
       >
         {list.map((item, index) => (
           <p

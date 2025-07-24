@@ -11,3 +11,12 @@
 .touch:hover {
   border-color: white;
 }
+
+.scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
