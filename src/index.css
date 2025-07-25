@@ -19,3 +19,11 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Custom line clamp utilities */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
