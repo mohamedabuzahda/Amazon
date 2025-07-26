@@ -1,17 +1,20 @@
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <div className="flex flex-col md:h-[68px] md:flex-row md:items-center md:justify-between bg-black w-full text-white">
       {/* Left: Logo & Location */}
       <div className="flex gap-1 p-2.5 max-[766px]:justify-between">
-        <img
-          src="logo.webp"
-          alt="amazon-logo"
-          className="w-24 h-11 cursor-pointer touch mx-1"
-        />
+        <Link to="/">
+          <img
+            src="logo.webp"
+            alt="amazon-logo"
+            className="w-24 h-11 cursor-pointer touch mx-1"
+          />
+        </Link>
 
         <div className="flex gap-1 cursor-pointer p-2 touch">
           <div className="w-4 pt-2">
@@ -59,17 +62,22 @@ const Navbar = () => {
         </div>
 
         {/* Account */}
-        <div className="flex relative flex-col p-2 cursor-pointer touch">
+        <Link
+          to="/login"
+          className="flex relative flex-col p-2 cursor-pointer touch"
+        >
           <p className="text-xs font-medium">Hello, sign in</p>
           <span className="flex items-center font-bold leading-[10px] text-sm gap-0.5">
             Account & Lists <IoMdArrowDropdown />
           </span>
-        </div>
+        </Link>
 
         {/* Orders */}
         <div className="flex justify-center items-center relative flex-col p-2 cursor-pointer touch">
           <p className="text-xs font-medium hidden lg:flex">Returns</p>
-          <p className="text-sm font-bold flex gap-1"><span className="hidden lg:flex">&</span> Orders</p>
+          <p className="text-sm font-bold flex gap-1">
+            <span className="hidden lg:flex">&</span> Orders
+          </p>
         </div>
 
         {/* Cart */}

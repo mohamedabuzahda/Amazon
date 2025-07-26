@@ -5,6 +5,7 @@ import Products from "./Pages/Products";
 import SingleProduct from "./Pages/SingleProduct";
 import Login from "./Components/Auth/Login";
 import NotFound from "./Pages/NotFound";
+import Register from "./Components/Auth/Register";
 
 const router = createHashRouter([
   {
@@ -18,6 +19,7 @@ const router = createHashRouter([
     ],
   },
   { path: "/login", element: <Login /> },
+  { path: "/register", element: <Register /> },
   { path: "*", element: <NotFound /> },
 ]);
 
