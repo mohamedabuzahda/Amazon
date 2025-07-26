@@ -3,6 +3,7 @@ import Navbar from "./Components/Navbar";
 import NavbarBanner from "./Components/NavbarBanner";
 import Footer from "./Pages/Footer";
 import appRoutes from "./route";
+import BackToTop from "./Components/BackToTop";
 
 const App = () => {
   const location = useLocation();
@@ -17,6 +18,7 @@ const App = () => {
       
       <Routes>{appRoutes}</Routes>
 
+      {!hideLayout && <BackToTop />}
       {!hideLayout && <Footer />}
     </>
   );
