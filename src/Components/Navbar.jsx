@@ -73,21 +73,21 @@ const Navbar = () => {
         </Link>
 
         {/* Orders */}
-        <div className="flex justify-center items-center relative flex-col p-2 cursor-pointer touch">
+        <Link to="/order" className="flex justify-center items-center relative flex-col p-2 cursor-pointer touch">
           <p className="text-xs font-medium hidden lg:flex">Returns</p>
           <p className="text-sm font-bold flex gap-1">
             <span className="hidden lg:flex">&</span> Orders
           </p>
-        </div>
+        </Link>
 
         {/* Cart */}
-        <div className="flex items-center justify-center relative gap-1 touch">
+        <Link to="/cart" className="flex items-center justify-center relative gap-1 touch">
           <span className="absolute font-semibold top-[1%] right-[32%] lg:right-[62%] text-[#febd69]">
             2
           </span>
           <img src="icon/cart.webp" alt="cart-icon" className="w-10" />
           <p className="text-sm font-medium hidden lg:flex">Cart</p>
-        </div>
+        </Link>
       </div>
     </div>
   );
