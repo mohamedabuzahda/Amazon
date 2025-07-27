@@ -31,7 +31,18 @@ import slider211 from "../assets/images/slider211.png";
 import slider212 from "../assets/images/slider212.png";
 import slider213 from "../assets/images/slider213.png";
 import slider214 from "../assets/images/slider214.png";
+import { Link } from "react-router-dom";
+
 export default function HomePage() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "#575757", color: "#fff" }}>
+        <h2>You must be logged in to view this page.</h2>
+        <Link to="/login" style={{ color: "#ffd700", fontWeight: "bold", fontSize: 18, marginTop: 16 }}>Go to Login</Link>
+      </div>
+    );
+  }
   return (
     <div className="bg-[#575757] min-h-screen">
       <HeroCarousel />
