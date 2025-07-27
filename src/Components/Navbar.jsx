@@ -2,6 +2,9 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import Logo from "../assets/Logo/logo.webp"
+import EG from "../assets/icon/EG.webp"
+import CartIcon from "../assets/icon/cart.webp"
 
 const Navbar = () => {
   return (
@@ -10,7 +13,7 @@ const Navbar = () => {
       <div className="flex gap-1 p-2.5 max-[766px]:justify-between">
         <Link to="/">
           <img
-            src="logo.webp"
+            src={Logo}
             alt="amazon-logo"
             className="w-24 h-11 cursor-pointer touch mx-1"
           />
@@ -55,7 +58,7 @@ const Navbar = () => {
       <div className="flex p-2.5 max-[766px]:justify-between">
         {/* EG Flag */}
         <div className="flex justify-center gap-1 items-center pt-2.5 p-2 cursor-pointer touch">
-          <img src="icon/EG.webp" alt="eg-img" />
+          <img src={EG} alt="eg-img" />
           <span className="flex items-center font-bold leading-[10px] text-sm">
             EN <IoMdArrowDropdown />
           </span>
@@ -85,7 +88,7 @@ const Navbar = () => {
           <span className="absolute font-semibold top-[1%] right-[32%] lg:right-[62%] text-[#febd69]">
             2
           </span>
-          <img src="icon/cart.webp" alt="cart-icon" className="w-10" />
+          <img src={CartIcon} alt="cart-icon" className="w-10" />
           <p className="text-sm font-medium hidden lg:flex">Cart</p>
         </Link>
       </div>

@@ -1,5 +1,7 @@
 import { MdLanguage } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
+import logo from "../assets/Logo/logo.webp";
+import EG from "../assets/icon/EG.webp";
 
 const Footer = () => {
   return (
@@ -60,7 +62,7 @@ const Footer = () => {
 
         {/* Logo & Dropdown Languages */}
         <div className="flex items-center justify-center flex-wrap gap-x-12 gap-y-5">
-          <img src="logo.webp" alt="logo" />
+          <img src={logo} alt="logo" />
 
           <div className="flex gap-2">
             <div className="relative inline-block text-left group">
@@ -82,7 +84,7 @@ const Footer = () => {
 
             <div className="relative inline-block text-left group">
               <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-[#232F3E] text-[#B4B4B4] border border-[#B4B4B4] rounded-sm hover:bg-[#1e2733]">
-                <img src="icon/EG.webp" alt="logo" />
+                <img src={EG} alt="egypt-icon" />
                 Egypt
               </button>
 
