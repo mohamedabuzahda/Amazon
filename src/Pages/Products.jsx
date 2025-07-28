@@ -1,179 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import product1 from "../assets/Products/product-1.webp";
-import product2 from "../assets/Products/product-2.webp";
-import product3 from "../assets/Products/product-3.webp";
-import product4 from "../assets/Products/product-4.webp";
-import product5 from "../assets/Products/product-5.webp";
-import product6 from "../assets/Products/product-6.webp";
-import product7 from "../assets/Products/product-7.webp";
-import product8 from "../assets/Products/product-8.webp";
-import product9 from "../assets/Products/product-9.webp";
-import product10 from "../assets/Products/product-10.webp";
-import product11 from "../assets/Products/product-11.webp";
-import product12 from "../assets/Products/product-12.webp";
-
-const initialProducts = [
-  {
-    id: 1,
-    name: "Fica 60 cm 1200 m3/hr Filterless Kitchen Chimney with 15 Years Warranty With LED Panel",
-    image: product1,
-    rating: 4.2,
-    reviews: 14204,
-    originalPrice: 16990,
-    currentPrice: 12990,
-    discount: 24,
-    deliveryDate: "2025-07-28",
-    freeDelivery: true,
-    brand: "Fica",
-  },
-  {
-    id: 2,
-    name: "Godrej 1.5 Ton 3 Star, 5-in-1 Convertible Inverter Split AC (5 Years Warranty, Copper, I-Sense Technology, 2024 Model)",
-    image: product2,
-    rating: 4.1,
-    reviews: 610,
-    originalPrice: 54990,
-    currentPrice: 32990,
-    discount: 40,
-    deliveryDate: "2025-08-15",
-    brand: "Godrej",
-    freeDelivery: true,
-  },
-  {
-    id: 3,
-    name: "LG 28 L Convection Microwave Oven (MC2846BG), Black, Quartz Heater",
-    image: product3,
-    rating: 4.2,
-    reviews: 1522,
-    originalPrice: 18990,
-    currentPrice: 13490,
-    discount: 29,
-    deliveryDate: "2025-07-27",
-    brand: "LG",
-    freeDelivery: true,
-  },
-  {
-    id: 4,
-    name: "Samsung 8 Kg, 5 star, Eco Bubble Tech, Digital Inverter Motor, Soft Closing Door, Fully-Automatic Top Load Washing Machine",
-    image: product4,
-    rating: 4.3,
-    reviews: 25505,
-    originalPrice: 26990,
-    currentPrice: 19990,
-    discount: 26,
-    deliveryDate: "2025-07-27",
-    brand: "Samsung",
-    freeDelivery: true,
-  },
-  {
-    id: 5,
-    name: "Samsung 7 kg, Eco Bubble Tech, 5 star, Digital Inverter, Soft Closing Door, Fully-Automatic, Top Load Washing Machine",
-    image: product5,
-    rating: 4.3,
-    reviews: 6483,
-    originalPrice: 24990,
-    currentPrice: 17990,
-    discount: 28,
-    deliveryDate: "2025-07-27",
-    brand: "Samsung",
-    freeDelivery: true,
-  },
-  {
-    id: 6,
-    name: "Samsung 7 kg, 3 star, Fully-Automatic Top Load Washing Machine (WA70A4002GS/TL, Imperial Silver)",
-    image: product6,
-    rating: 4.2,
-    reviews: 5123,
-    originalPrice: 22990,
-    currentPrice: 16590,
-    discount: 28,
-    deliveryDate: "2025-08-15",
-    brand: "Samsung",
-    freeDelivery: true,
-  },
-  {
-    id: 7,
-    name: "LG 6.5 Kg 5 Star Inverter TurboDrum Fully Automatic Top Loading Washing Machine (T65SKSF4Z, 5 Smart Motion Technology)",
-    image: product7,
-    rating: 4.3,
-    reviews: 10122,
-    originalPrice: 23990,
-    currentPrice: 16490,
-    discount: 31,
-    deliveryDate: "2025-07-27",
-    brand: "LG",
-    freeDelivery: true,
-  },
-  {
-    id: 8,
-    name: "Godrej 6.5 Kg 5 Star I-Wash Technology for Automatic Top Touch Wash Fully-Automatic Top Load Washing Machine",
-    image: product8,
-    rating: 4.1,
-    reviews: 1440,
-    originalPrice: 18990,
-    currentPrice: 12990,
-    discount: 32,
-    deliveryDate: "2025-07-27",
-    brand: "Godrej",
-    freeDelivery: true,
-  },
-  {
-    id: 9,
-    name: "Panasonic 20 L Solo Microwave Oven (NN-SM25JBFDG,Black)",
-    image: product9,
-    rating: 4.2,
-    reviews: 13204,
-    originalPrice: 16990,
-    currentPrice: 12990,
-    discount: 24,
-    deliveryDate: "2025-07-27",
-    brand: "Panasonic",
-    freeDelivery: true,
-  },
-  {
-    id: 10,
-    name: "Samsung 183 L 4 Star Digital Inverter, Direct-Cool Single Door Refrigerator (RR20D2824CR/HL, Red, Base Stand with Drawer)",
-    image: product10,
-    rating: 4.2,
-    reviews: 610,
-    originalPrice: 54990,
-    currentPrice: 32990,
-    discount: 40,
-    deliveryDate: "2025-08-15",
-    brand: "Samsung",
-    freeDelivery: true,
-  },
-  {
-    id: 11,
-    name: "LG 7 Kg, 5 Star, Direct Drive Technology, Steam Wash, 6 Motion DD, Smart Diagnosis, Fully-Automatic Front Load Washing Machine",
-    image: product11,
-    rating: 4.2,
-    reviews: 1522,
-    originalPrice: 18990,
-    currentPrice: 13490,
-    discount: 29,
-    deliveryDate: "2025-07-27",
-    brand: "LG",
-    freeDelivery: true,
-  },
-  {
-    id: 12,
-    name: "Whirlpool 184 L 2 Star Direct-Cool Single Door Refrigerator (205 WDE CLS 2S SAPPHIRE BLUE -Z, Sapphire Blue, Base Stand with Drawer)",
-    image: product12,
-    rating: 4.3,
-    reviews: 25505,
-    originalPrice: 26990,
-    currentPrice: 19990,
-    discount: 26,
-    deliveryDate: "2025-07-27",
-    brand: "Whirlpool",
-    freeDelivery: true,
-  },
-];
+import axios from "axios";
 
 const Products = () => {
-  const [products, setProducts] = useState(initialProducts);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
   const [activeFilters, setActiveFilters] = useState({
     delivery: false,
@@ -182,13 +14,62 @@ const Products = () => {
     priceRange: [],
   });
 
-  // Filter products based on active filters
+  
+  const clearAllFilters = () => {
+    setActiveFilters({
+      delivery: false,
+      rating: false,
+      brands: [],
+      priceRange: [],
+    });
+  };
+
+  
   useEffect(() => {
-    let filteredProducts = [...initialProducts];
+    let cancelled = false;
+    setLoading(true);
+    axios
+      .get("https://fakestoreapi.com/products")
+      .then((res) => {
+        if (!cancelled && Array.isArray(res.data)) {
+          
+          const apiProducts = res.data.map((p) => ({
+            id: p.id,
+            name: p.title,
+            image: p.image,
+            rating: p.rating?.rate || 4,
+            reviews: p.rating?.count || 100,
+            originalPrice: Math.round(p.price * 1.2),
+            currentPrice: Math.round(p.price),
+            discount: 20,
+            deliveryDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
+              .toISOString()
+              .slice(0, 10),
+            brand: p.category,
+            freeDelivery: true,
+          }));
+          setProducts(apiProducts);
+          setFilteredProducts(apiProducts);
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        setProducts(initialProducts);
+        setFilteredProducts(initialProducts);
+        setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  
+  useEffect(() => {
+    let filtered = [...products];
 
     // Filter by delivery (2 days)
     if (activeFilters.delivery) {
-      filteredProducts = filteredProducts.filter((product) => {
+      filtered = filtered.filter((product) => {
         const deliveryDate = new Date(product.deliveryDate);
         const today = new Date();
         const daysDifference = Math.ceil(
@@ -200,21 +81,21 @@ const Products = () => {
 
     // Filter by rating (4 stars and up)
     if (activeFilters.rating) {
-      filteredProducts = filteredProducts.filter(
+      filtered = filtered.filter(
         (product) => product.rating >= 4.0
       );
     }
 
     // Filter by brands
     if (activeFilters.brands.length > 0) {
-      filteredProducts = filteredProducts.filter((product) =>
+      filtered = filtered.filter((product) =>
         activeFilters.brands.includes(product.brand)
       );
     }
 
     // Filter by price ranges
     if (activeFilters.priceRange.length > 0) {
-      filteredProducts = filteredProducts.filter((product) => {
+      filtered = filtered.filter((product) => {
         return activeFilters.priceRange.some((range) => {
           switch (range) {
             case "10000-15000":
@@ -238,10 +119,10 @@ const Products = () => {
       });
     }
 
-    setProducts(filteredProducts);
-  }, [activeFilters]);
+    setFilteredProducts(filtered);
+  }, [activeFilters, products]);
 
-  // Handle delivery filter
+  
   const handleDeliveryFilter = (e) => {
     setActiveFilters((prev) => ({
       ...prev,
@@ -249,7 +130,15 @@ const Products = () => {
     }));
   };
 
-  // Handle brand filter
+  
+  const handleRatingFilter = (e) => {
+    setActiveFilters((prev) => ({
+      ...prev,
+      rating: e.target.checked,
+    }));
+  };
+
+  
   const handleBrandFilter = (e) => {
     const brand = e.target.value;
     const isChecked = e.target.checked;
@@ -262,7 +151,7 @@ const Products = () => {
     }));
   };
 
-  // Handle price range filter
+  
   const handlePriceFilter = (e) => {
     const priceRange = e.target.value;
     const isChecked = e.target.checked;
@@ -273,16 +162,6 @@ const Products = () => {
         ? [...prev.priceRange, priceRange]
         : prev.priceRange.filter((p) => p !== priceRange),
     }));
-  };
-
-  // Clear all filters
-  const clearAllFilters = () => {
-    setActiveFilters({
-      delivery: false,
-      rating: false,
-      brands: [],
-      priceRange: [],
-    });
   };
 
   const renderStars = (rating) => {
@@ -325,6 +204,27 @@ const Products = () => {
       maximumFractionDigits: 0,
     }).format(price);
   };
+
+  const addToCart = (product) => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existing = cart.find((item) => item.id === product.id);
+    if (existing) {
+      existing.qty = (existing.qty || 1) + 1;
+    } else {
+      cart.push({ ...product, qty: 1 });
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    window.dispatchEvent(new Event("cartUpdated"));
+    alert("Added to cart!");
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-2xl text-gray-600">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -405,6 +305,12 @@ const Products = () => {
                 </h3>
                 <div className="space-y-2">
                   <label className="flex items-center">
+                    <input 
+                      type="checkbox" 
+                      checked={activeFilters.rating}
+                      onChange={handleRatingFilter} 
+                      className="w-4 h-4 text-blue-600 rounded" 
+                    />
                     <span className="ml-2 text-sm text-gray-700 flex items-center">
                       {renderStars(4)} <span className="ml-1">& Up</span>
                     </span>
@@ -562,7 +468,7 @@ const Products = () => {
               )}
             </div>
 
-            {products.length === 0 ? (
+            {filteredProducts.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-gray-500 text-lg">
                   No products match your current filters.
@@ -576,7 +482,7 @@ const Products = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
-                {products.map((product) => (
+                {filteredProducts.map((product) => (
                   <div key={product.id}>
                     <div className="bg-white shadow-sm hover:shadow-md transition-shadow duration-200 p-3 sm:p-4 border rounded-lg">
                       {/* Product Image */}
@@ -639,7 +545,10 @@ const Products = () => {
                         </div>
 
                         {/* Add to Cart Button */}
-                        <button className="mt-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-2 px-3 sm:px-4 rounded-full font-normal transition-colors duration-200 text-xs sm:text-sm">
+                        <button 
+                          className="mt-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-2 px-3 sm:px-4 rounded-full font-normal transition-colors duration-200 text-xs sm:text-sm"
+                          onClick={() => addToCart(product)}
+                        >
                           Add to cart
                         </button>
                       </div>

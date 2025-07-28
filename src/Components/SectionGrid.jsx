@@ -6,6 +6,7 @@ import card5 from "../assets/images/card5.png";
 import card6 from "../assets/images/card6.png";
 import card7 from "../assets/images/card7.png";
 import card8 from "../assets/images/card8.png";
+import { Link } from "react-router-dom";
 
 const cards = [
   {
@@ -119,10 +120,13 @@ export default function SectionGrid() {
             </div>
           </div>
 
-          {/* CTA Text (dynamic) */}
-          <p className="text-left text-[#1F8394] text-[15px] font-semibold cursor-pointer mt-auto">
+          {/* CTA Text (dynamic) as Link to login */}
+          <Link
+            to="/login"
+            className="text-left text-[#1F8394] text-[15px] font-semibold cursor-pointer mt-auto block"
+          >
             {card.ctaText}
-          </p>
+          </Link>
         </div>
       ))}
     </div>

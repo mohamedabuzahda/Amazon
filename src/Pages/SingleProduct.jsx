@@ -1,5 +1,4 @@
 import { IoIosArrowDown } from "react-icons/io";
-import product1 from "../assets/Products/product-1.webp";
 import locationIcon from "../assets/icon/Vector.webp";
 import visa from "../assets/icon/visa.webp";
 import box from "../assets/icon/box.webp";
@@ -8,6 +7,9 @@ import avatar from "../assets/avatars/avatar.webp";
 import avatar2 from "../assets/avatars/avatar-2.webp";
 import avatar3 from "../assets/avatars/avatar-3.webp";
 import avatar4 from "../assets/avatars/avatar-4.webp";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const reviews = [
   {
@@ -62,6 +64,50 @@ const reviews = [
 ];
 
 const SingleProduct = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [qty, setQty] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    axios.get(`https://fakestoreapi.com/products/${id}`)
+      .then(res => {
+        setProduct(res.data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [id]);
+
+  const handleAddToCart = () => {
+    if (!product) return;
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existing = cart.find((item) => item.id === product.id);
+    if (existing) {
+      existing.qty = (existing.qty || 1) + qty;
+    } else {
+      cart.push({ ...product, qty });
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    window.dispatchEvent(new Event("cartUpdated"));
+    alert("Added to cart!");
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-2xl">
+        Loading...
+      </div>
+    );
+  }
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-2xl">
+        Product not found.
+      </div>
+    );
+  }
+
   return (
     <div className="border-t-2 py-10 px-[4%] transition-opacity ease-in duration-500 opacity-100">
       <div className="flex flex-col lg:flex-row gap-12">
@@ -71,13 +117,17 @@ const SingleProduct = () => {
         <div className="flex flex-col-reverse flex-1 gap-3 lg:flex-row">
           <div className="flex sm:flex-col overflow-x-auto scroll-hide sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
             <img
-              src={product1}
-              alt="product-img"
+              src={product.image}
+              alt={product.title}
               className="w-[20%] sm:w-[65%] sm:mb-3 flex-shrink-0 cursor-pointer"
             />
           </div>
           <div className="w-[85%] sm:w-[58%] mx-auto flex-grow">
-            <img src={product1} alt="Product-Image" className="w-full h-auto" />{" "}
+            <img
+              src={product.image}
+              alt={product.title}
+              className="w-full h-auto"
+            />
           </div>
         </div>
 
@@ -86,48 +136,31 @@ const SingleProduct = () => {
         2. Product Info
         ====================*/}
           <div className="lg:w-[58%] w-full">
-            <p>BRAND: WDIRARA</p>
-            <h1 className="text-2xl font-normal mt-2">
-              LG 7 Kg, 5 Star, Direct Drive Technology, Steam Wash, 6 Motion DD,
-              Smart Diagnosis, Fully-Automatic Front Load
-            </h1>
+            <p className="text-sm text-gray-500 mb-1">
+              Category: {product.category}
+            </p>
+            <h1 className="text-2xl font-normal mt-2">{product.title}</h1>
             <div className="flex gap-5 text-[#1F8394] text-sm mt-1">
               <div className="flex text-yellow-400 gap-1 items-center">
-                <p className="text-black text-sm ">4.1</p>
-                {"★"}
-                {"★"}
-                {"★"}
-                {"★"}
-                {"☆"}
+                <p className="text-black text-sm ">
+                  {product.rating?.rate || "-"}
+                </p>
+                {Array.from({ length: 5 }, (_, i) =>
+                  i < Math.round(product.rating?.rate || 0) ? "★" : "☆"
+                )}
                 <IoIosArrowDown className="text-black text-base" />
               </div>
-              <p>67 rating</p>
+              <p>{product.rating?.count || 0} rating</p>
               <p>|</p>
               <p>Search This Page</p>
             </div>
             <hr className="border-t border-[#D9D9D9] my-3 w-[90%]" />
             <div className="flex flex-col gap-3">
               <div className="flex">
-                <p className="text-xs">SAR</p>
-                <p className="text-3xl">203</p>
-                <p className="text-xs">14</p>
+                <p className="text-xs">$</p>
+                <p className="text-3xl">{product.price}</p>
               </div>
-
               <p className="font-light text-lg">All Price include VAT.</p>
-
-              <p className="font-medium">
-                <span className="text-[#5C5C5C] text-sm font-normal">
-                  Sign To redeem.
-                </span>{" "}
-                <span className="bg-[#71ED58] px-1 mx-1 font-normal">
-                  Extra 20%
-                </span>{" "}
-                Off with meen credit cards.
-              </p>
-              <p className="font-medium">
-                Entre Code MEEM20 at checkout. Discount by Amazon.
-              </p>
-
               <div className="flex gap-2 text-[#1F8394]">
                 <div className="w-32 flex justify-center flex-col items-center text-center">
                   <img src={visa} alt="visa-ico" className="w-12" />
@@ -143,19 +176,9 @@ const SingleProduct = () => {
                 </div>
               </div>
               <hr className="border-t border-[#D9D9D9] my-3 w-[90%]" />
-
               <div>
                 <h2 className="font-bold mb-2.5">About this item</h2>
-                <p>
-                  Feature: square neck, cutout, puff sleeve, ruffle hem, tie
-                  back aline dress
-                </p>
-                <p>Fabric has some stretch,and it is soft and comfortable</p>
-                <p>
-                  Suitable for daily wear, holidays, dating, vacation, weekend
-                  casual
-                </p>
-                <p>Care Instructions: Machine wash or professional dry clean</p>
+                <p>{product.description}</p>
               </div>
             </div>
           </div>
@@ -189,24 +212,21 @@ const SingleProduct = () => {
               <select
                 id="Quantity"
                 className="bg-gray-50 border mb-1 border-gray-300 font-medium rounded-lg block w-full p-2.5"
+                value={qty}
+                onChange={(e) => setQty(Number(e.target.value))}
               >
-                <option value="1">Quantity: 1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
+                {[...Array(10)].map((_, i) => (
+                  <option key={i + 1} value={i + 1}>
+                    Quantity: {i + 1}
+                  </option>
+                ))}
               </select>
             </form>
 
-            <button className="bg-[#FFD814] py-1.5 rounded-full">
-              Add To Cart
-            </button>
-            <button className="bg-[#FFA41C] py-1.5 rounded-full mb-3">
+            <button
+              className="bg-[#FFD814] py-1.5 rounded-full mb-3"
+              onClick={handleAddToCart}
+            >
               Add To Cart
             </button>
 
