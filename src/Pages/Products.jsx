@@ -577,16 +577,16 @@ const Products = () => {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
                 {products.map((product) => (
-                  <Link to={`/product/${product.id}`} key={product.id}>
+                  <div key={product.id}>
                     <div className="bg-white shadow-sm hover:shadow-md transition-shadow duration-200 p-3 sm:p-4 border rounded-lg">
                       {/* Product Image */}
-                      <div className="aspect-square mb-3 bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden">
+                      <Link to={`/product/${product.id}`} className="aspect-square mb-3 bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden">
                         <img
                           src={product.image}
                           alt={product.name}
                           className="w-full h-full object-contain hover:scale-105 transition-transform duration-200"
                         />
-                      </div>
+                      </Link>
 
                       {/* Product Info */}
                       <div className="space-y-2">
@@ -644,7 +644,7 @@ const Products = () => {
                         </button>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             )}
