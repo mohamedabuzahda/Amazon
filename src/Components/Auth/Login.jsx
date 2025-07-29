@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import logo2 from "../../assets/Logo/logo-2.webp";
 
 const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,6 +22,7 @@ const Login = () => {
       return;
     }
     // تحقق من وجود المستخدم في localStorage
+    // see if data or user in localStorage or no
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user || user.email !== email || user.password !== password) {
       setError("Email or password is incorrect, or user not registered.");
@@ -35,31 +35,17 @@ const Login = () => {
 
   return (
     <div style={containerStyle}>
-      <div style={logoBoxStyle}>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
-          alt="Amazon Logo"
-          style={{ width: "100px" }}
-        />
-        <span
-          style={{
-            fontSize: "18px",
-            marginLeft: "4px",
-            position: "relative",
-            bottom: "6px",
-          }}
-        >
-          <strong>.in</strong>
-        </span>
-      </div>
+      <Link to="/" style={logoBoxStyle}>
+        <img src={logo2} alt="Amazon Logo" style={{ width: "100px" }} />
+      </Link>
 
       <div style={boxStyle}>
-        <h2 style={{ fontWeight: "400", fontSize: "28px", marginBottom: "20px" }}>
+        <h2
+          style={{ fontWeight: "400", fontSize: "28px", marginBottom: "20px" }}
+        >
           Sign in
         </h2>
-        <label style={{ fontWeight: "bold", fontSize: "14px" }}>
-          Email 
-        </label>
+        <label style={{ fontWeight: "bold", fontSize: "14px" }}>Email</label>
         <input
           type="text"
           value={email}
@@ -98,23 +84,27 @@ const Login = () => {
   );
 };
 
-
 const containerStyle = {
-  fontFamily: "Arial, sans-serif",
   backgroundColor: "#fff",
-  height: "100vh",
-  paddingTop: "40px",
+  minHeight: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "20px",
 };
 const logoBoxStyle = {
-  textAlign: "center",
+  display: "flex",
+  justifyContent: "center",
   marginBottom: "30px",
 };
 const boxStyle = {
-  width: "350px",
-  margin: "0 auto",
+  width: "100%",
+  maxWidth: "350px",
   border: "1px solid #ddd",
   padding: "20px 26px",
   borderRadius: "8px",
+  boxSizing: "border-box",
 };
 const inputStyle = {
   width: "100%",
@@ -153,8 +143,5 @@ const smallText = {
   marginBottom: "10px",
 };
 
-
-
 // **Export Default**
 export default Login;
-

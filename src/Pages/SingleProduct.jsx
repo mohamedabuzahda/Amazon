@@ -119,10 +119,10 @@ const SingleProduct = () => {
             <img
               src={product.image}
               alt={product.title}
-              className="w-[20%] sm:w-[65%] sm:mb-3 flex-shrink-0 cursor-pointer"
+              className="w-[20%] sm:w-[50%] sm:mb-3 flex-shrink-0 cursor-pointer"
             />
           </div>
-          <div className="w-[85%] sm:w-[58%] mx-auto flex-grow">
+          <div className="w-[85%] sm:w-[58%] mx-auto">
             <img
               src={product.image}
               alt={product.title}

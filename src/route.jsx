@@ -1,4 +1,3 @@
-// routes.jsx
 import { Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import Products from "./Pages/Products";
@@ -8,17 +7,60 @@ import Register from "./Components/Auth/Register";
 import NotFound from "./Pages/NotFound";
 import Cart from "./Pages/Cart";
 import Order from "./Pages/Order";
+import PageTransitionWrapper from "./animations/PageTransitionWrapper";
 
 const appRoutes = (
   <>
-    <Route path="/" element={<Home />} />
-    <Route path="/products" element={<Products />} />
-    <Route path="/product/:id" element={<SingleProduct />} />
-    <Route path="/cart" element={<Cart />} />
-    <Route path="/order" element={<Order />} />
+    <Route
+      path="/"
+      element={
+        <PageTransitionWrapper>
+          <Home />
+        </PageTransitionWrapper>
+      }
+    />
+    <Route
+      path="/products"
+      element={
+        <PageTransitionWrapper>
+          <Products />
+        </PageTransitionWrapper>
+      }
+    />
+    <Route
+      path="/product/:id"
+      element={
+        <PageTransitionWrapper>
+          <SingleProduct />
+        </PageTransitionWrapper>
+      }
+    />
+    <Route
+      path="/cart"
+      element={
+        <PageTransitionWrapper>
+          <Cart />
+        </PageTransitionWrapper>
+      }
+    />
+    <Route
+      path="/order"
+      element={
+        <PageTransitionWrapper>
+          <Order />
+        </PageTransitionWrapper>
+      }
+    />
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
-    <Route path="*" element={<NotFound />} />
+    <Route
+      path="*"
+      element={
+        <PageTransitionWrapper>
+          <NotFound />
+        </PageTransitionWrapper>
+      }
+    />
   </>
 );
 
