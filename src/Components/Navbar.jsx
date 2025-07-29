@@ -1,7 +1,7 @@
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Logo from "../assets/Logo/logo.webp";
 import EG from "../assets/icon/EG.webp";
@@ -47,6 +47,8 @@ const CartCount = () => {
 };
 
 const Navbar = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
   const [showLangDropdown, setShowLangDropdown] = useState(false);
   const [selectedGovernorate, setSelectedGovernorate] =
     useState("Update Location");
@@ -81,6 +83,17 @@ const Navbar = () => {
     "North Sinai",
     "Sohag",
   ];
+
+  const handleSearch = () => {
+    if (searchTerm.trim() !== "") {
+      navigate(`/products?search=${encodeURIComponent(searchTerm.trim())}`);
+    }
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
     <div className="flex flex-col md:h-[68px] md:flex-row md:items-center md:justify-between bg-black w-full text-white">
@@ -145,14 +158,20 @@ const Navbar = () => {
             type="text"
             placeholder="Search Amazon.eg"
             className="p-1.5 w-full text-black placeholder:text-[#696969] font-medium placeholder:text-[15px] outline-none"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown} // بحث بالضغط على Enter
           />
 
-          <button className="bg-[#febd69] hover:bg-yellow-500 cursor-pointer transition duration-100 rounded-tr-md rounded-br-md p-2.5 flex items-center justify-center">
+          <button
+            onClick={handleSearch}
+            className="bg-[#febd69] hover:bg-yellow-500 cursor-pointer transition duration-100 rounded-tr-md rounded-br-md p-2.5 flex items-center justify-center"
+            aria-label="Search"
+          >
             <IoSearch className="text-2xl text-black" />
           </button>
         </div>
       </div>
-
       {/* Right: Lang, Account, Orders, Cart */}
       <div className="flex p-2.5 max-[766px]:justify-between">
         {/* EG Flag */}
