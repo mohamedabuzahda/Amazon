@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
 const Products = () => {
@@ -14,6 +14,11 @@ const Products = () => {
     brands: [],
     priceRange: [],
   });
+
+  // Search Bar
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const searchQuery = queryParams.get("search")?.toLowerCase() || "";
 
   const clearAllFilters = () => {
     setActiveFilters({
@@ -66,6 +71,12 @@ const Products = () => {
   useEffect(() => {
     let filtered = [...products];
 
+    if (searchQuery) {
+      filtered = filtered.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery)
+      );
+    }
+
     if (activeFilters.delivery) {
       filtered = filtered.filter((product) => {
         const deliveryDate = new Date(product.deliveryDate);
@@ -100,7 +111,7 @@ const Products = () => {
     }
 
     setFilteredProducts(filtered);
-  }, [activeFilters, products]);
+  }, [activeFilters, products, searchQuery]);
 
   const handleDeliveryFilter = (e) => {
     setActiveFilters((prev) => ({
