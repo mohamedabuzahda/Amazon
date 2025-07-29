@@ -69,11 +69,6 @@ const Order = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex md:flex-col gap-2">
-                  <button className="bg-blue-600 text-white px-3 py-1 text-xs md:text-sm rounded hover:bg-blue-700">
-                    Buy it Again
-                  </button>
-                </div>
               </div>
             ))
           )}

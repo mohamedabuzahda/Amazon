@@ -31,34 +31,57 @@ import slider211 from "../assets/images/slider211.png";
 import slider212 from "../assets/images/slider212.png";
 import slider213 from "../assets/images/slider213.png";
 import slider214 from "../assets/images/slider214.png";
-import { Link } from "react-router-dom";
 
 export default function HomePage() {
   const user = JSON.parse(localStorage.getItem("user"));
-  if (!user) {
-    return (
-      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "#575757", color: "#fff" }}>
-        <h2>You must be logged in to view this page.</h2>
-        <Link to="/login" style={{ color: "#ffd700", fontWeight: "bold", fontSize: 18, marginTop: 16 }}>Go to Login</Link>
-      </div>
-    );
-  }
+
   return (
     <div className="bg-[#575757] min-h-screen">
       <HeroCarousel />
-       <div className="relative z-20 -mt-[150px]"> 
+      <div className="relative z-20 -mt-[150px]">
         <SectionGrid />
       </div>
-    <HorizontalSlider
+      <HorizontalSlider
         title="Best Sellers in Clothing & Accessories"
-        images={[slider1, slider2, slider3, slider4, slider5, slider6, slider7, slider8, slider9, slider10, slider11, slider12, slider13, slider14, slider15]}
+        images={[
+          slider1,
+          slider2,
+          slider3,
+          slider4,
+          slider5,
+          slider6,
+          slider7,
+          slider8,
+          slider9,
+          slider10,
+          slider11,
+          slider12,
+          slider13,
+          slider14,
+          slider15,
+        ]}
       />
       <Section />
       <HorizontalSlider
         title="Min. 50% off | Unique kitchen finds | Amazon Brands & more"
-        images={[slider21, slider22, slider23, slider24, slider25, slider26, slider27, slider28, slider29, slider210, slider211, slider212, slider213, slider214]}
-       imgWidth="250px"
-      showSeeAll={true}
+        images={[
+          slider21,
+          slider22,
+          slider23,
+          slider24,
+          slider25,
+          slider26,
+          slider27,
+          slider28,
+          slider29,
+          slider210,
+          slider211,
+          slider212,
+          slider213,
+          slider214,
+        ]}
+        imgWidth="250px"
+        showSeeAll={true}
       />
       <br></br>
     </div>

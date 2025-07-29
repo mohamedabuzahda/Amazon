@@ -92,7 +92,7 @@ const Footer = () => {
               <div className="absolute left-0 z-10 hidden w-full mt-1 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-sm shadow-lg group-hover:block dark:bg-gray-700 dark:border-gray-600">
                 <div className="py-1">
                   <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600">
-                    English
+                    Egypt
                   </button>
                 </div>
               </div>

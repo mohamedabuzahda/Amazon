@@ -5,6 +5,7 @@ import axios from "axios";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [availableBrands, setAvailableBrands] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
   const [activeFilters, setActiveFilters] = useState({
@@ -14,7 +15,6 @@ const Products = () => {
     priceRange: [],
   });
 
-  
   const clearAllFilters = () => {
     setActiveFilters({
       delivery: false,
@@ -24,7 +24,6 @@ const Products = () => {
     });
   };
 
-  
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
@@ -32,30 +31,31 @@ const Products = () => {
       .get("https://fakestoreapi.com/products")
       .then((res) => {
         if (!cancelled && Array.isArray(res.data)) {
-          
           const apiProducts = res.data.map((p) => ({
             id: p.id,
             name: p.title,
             image: p.image,
             rating: p.rating?.rate || 4,
             reviews: p.rating?.count || 100,
-            originalPrice: Math.round(p.price * 1.2),
+            originalPrice: Math.round(p.price * 1.3),
             currentPrice: Math.round(p.price),
-            discount: 20,
+            discount: 30,
             deliveryDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
               .toISOString()
               .slice(0, 10),
             brand: p.category,
             freeDelivery: true,
           }));
+
+          const brandsSet = new Set(apiProducts.map((p) => p.brand));
+          setAvailableBrands(Array.from(brandsSet).sort());
+
           setProducts(apiProducts);
           setFilteredProducts(apiProducts);
         }
         setLoading(false);
       })
       .catch(() => {
-        setProducts(initialProducts);
-        setFilteredProducts(initialProducts);
         setLoading(false);
       });
     return () => {
@@ -63,11 +63,9 @@ const Products = () => {
     };
   }, []);
 
-  
   useEffect(() => {
     let filtered = [...products];
 
-    // Filter by delivery (2 days)
     if (activeFilters.delivery) {
       filtered = filtered.filter((product) => {
         const deliveryDate = new Date(product.deliveryDate);
@@ -79,42 +77,24 @@ const Products = () => {
       });
     }
 
-    // Filter by rating (4 stars and up)
     if (activeFilters.rating) {
-      filtered = filtered.filter(
-        (product) => product.rating >= 4.0
-      );
+      filtered = filtered.filter((product) => product.rating >= 4.0);
     }
 
-    // Filter by brands
     if (activeFilters.brands.length > 0) {
       filtered = filtered.filter((product) =>
         activeFilters.brands.includes(product.brand)
       );
     }
 
-    // Filter by price ranges
     if (activeFilters.priceRange.length > 0) {
       filtered = filtered.filter((product) => {
         return activeFilters.priceRange.some((range) => {
-          switch (range) {
-            case "10000-15000":
-              return (
-                product.currentPrice >= 10000 && product.currentPrice <= 15000
-              );
-            case "15000-20000":
-              return (
-                product.currentPrice >= 15000 && product.currentPrice <= 20000
-              );
-            case "20000-35000":
-              return (
-                product.currentPrice >= 20000 && product.currentPrice <= 35000
-              );
-            case "35000+":
-              return product.currentPrice >= 35000;
-            default:
-              return false;
+          if (range === "2000+") {
+            return product.currentPrice >= 2000;
           }
+          const [min, max] = range.split("-").map(Number);
+          return product.currentPrice >= min && product.currentPrice <= max;
         });
       });
     }
@@ -122,7 +102,6 @@ const Products = () => {
     setFilteredProducts(filtered);
   }, [activeFilters, products]);
 
-  
   const handleDeliveryFilter = (e) => {
     setActiveFilters((prev) => ({
       ...prev,
@@ -130,7 +109,6 @@ const Products = () => {
     }));
   };
 
-  
   const handleRatingFilter = (e) => {
     setActiveFilters((prev) => ({
       ...prev,
@@ -138,7 +116,6 @@ const Products = () => {
     }));
   };
 
-  
   const handleBrandFilter = (e) => {
     const brand = e.target.value;
     const isChecked = e.target.checked;
@@ -151,7 +128,6 @@ const Products = () => {
     }));
   };
 
-  
   const handlePriceFilter = (e) => {
     const priceRange = e.target.value;
     const isChecked = e.target.checked;
@@ -305,11 +281,11 @@ const Products = () => {
                 </h3>
                 <div className="space-y-2">
                   <label className="flex items-center">
-                    <input 
-                      type="checkbox" 
+                    <input
+                      type="checkbox"
                       checked={activeFilters.rating}
-                      onChange={handleRatingFilter} 
-                      className="w-4 h-4 text-blue-600 rounded" 
+                      onChange={handleRatingFilter}
+                      className="w-4 h-4 text-blue-600 rounded"
                     />
                     <span className="ml-2 text-sm text-gray-700 flex items-center">
                       {renderStars(4)} <span className="ml-1">& Up</span>
@@ -322,14 +298,7 @@ const Products = () => {
               <div>
                 <h3 className="font-medium text-gray-900 mb-3">Brands</h3>
                 <div className="space-y-2">
-                  {[
-                    "Samsung",
-                    "LG",
-                    "Whirlpool",
-                    "Godrej",
-                    "Panasonic",
-                    "Fica",
-                  ].map((brand) => (
+                  {availableBrands.map((brand) => (
                     <label key={brand} className="flex items-center">
                       <input
                         type="checkbox"
@@ -350,54 +319,25 @@ const Products = () => {
               <div>
                 <h3 className="font-medium text-gray-900 mb-3">Price</h3>
                 <div className="space-y-2">
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      value="10000-15000"
-                      checked={activeFilters.priceRange.includes("10000-15000")}
-                      onChange={handlePriceFilter}
-                      className="w-4 h-4 text-blue-600 rounded"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">
-                      ₹10,000 to ₹15,000
-                    </span>
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      value="15000-20000"
-                      checked={activeFilters.priceRange.includes("15000-20000")}
-                      onChange={handlePriceFilter}
-                      className="w-4 h-4 text-blue-600 rounded"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">
-                      ₹15,000 to ₹20,000
-                    </span>
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      value="20000-35000"
-                      checked={activeFilters.priceRange.includes("20000-35000")}
-                      onChange={handlePriceFilter}
-                      className="w-4 h-4 text-blue-600 rounded"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">
-                      ₹20,000 to ₹35,000
-                    </span>
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      value="35000+"
-                      checked={activeFilters.priceRange.includes("35000+")}
-                      onChange={handlePriceFilter}
-                      className="w-4 h-4 text-blue-600 rounded"
-                    />
-                    <span className="ml-2 text-sm text-gray-700">
-                      ₹35,000 & Above
-                    </span>
-                  </label>
+                  {[
+                    { label: "Under ₹500", value: "0-500" },
+                    { label: "₹500 to ₹1000", value: "500-1000" },
+                    { label: "₹1000 to ₹2000", value: "1000-2000" },
+                    { label: "Above ₹2000", value: "2000+" },
+                  ].map(({ label, value }) => (
+                    <label className="flex items-center" key={value}>
+                      <input
+                        type="checkbox"
+                        value={value}
+                        checked={activeFilters.priceRange.includes(value)}
+                        onChange={handlePriceFilter}
+                        className="w-4 h-4 text-blue-600 rounded"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">
+                        {label}
+                      </span>
+                    </label>
+                  ))}
                 </div>
               </div>
 
@@ -425,8 +365,8 @@ const Products = () => {
                     {activeFilters.priceRange.map((range) => (
                       <div key={range} className="text-blue-600">
                         •{" "}
-                        {range === "35000+"
-                          ? "₹35,000+"
+                        {range === "2000+"
+                          ? "₹2000+"
                           : `₹${range.replace("-", " - ₹")}`}
                       </div>
                     ))}
@@ -486,7 +426,10 @@ const Products = () => {
                   <div key={product.id}>
                     <div className="bg-white shadow-sm hover:shadow-md transition-shadow duration-200 p-3 sm:p-4 border rounded-lg">
                       {/* Product Image */}
-                      <Link to={`/product/${product.id}`} className="aspect-square mb-3 bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden">
+                      <Link
+                        to={`/product/${product.id}`}
+                        className="aspect-square mb-3 bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden"
+                      >
                         <img
                           src={product.image}
                           alt={product.name}
@@ -545,7 +488,7 @@ const Products = () => {
                         </div>
 
                         {/* Add to Cart Button */}
-                        <button 
+                        <button
                           className="mt-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-2 px-3 sm:px-4 rounded-full font-normal transition-colors duration-200 text-xs sm:text-sm"
                           onClick={() => addToCart(product)}
                         >

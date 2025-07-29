@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import logo2 from "../../assets/Logo/logo-2.webp";
 
 const nameRegex = /^[A-Za-z\s]{4,}$/;
 const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -27,11 +27,13 @@ const Register = () => {
       return;
     }
     if (!passwordRegex.test(password)) {
-      setError("Password must be at least 8 characters and include letters and numbers.");
+      setError(
+        "Password must be at least 8 characters and include letters and numbers."
+      );
       return;
     }
     setError("");
-    
+
     localStorage.setItem("user", JSON.stringify({ name, email, password }));
     alert("Account created successfully!");
     setName("");
@@ -40,39 +42,20 @@ const Register = () => {
   };
 
   return (
-    <div
-      style={{
-        fontFamily: "Arial, sans-serif",
-        backgroundColor: "#fff",
-        height: "100vh",
-        paddingTop: "40px",
-      }}
-    >
-      <div style={{ textAlign: "center", marginBottom: "30px" }}>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
-          alt="Amazon Logo"
-          style={{ width: "100px" }}
-        />
-        <span
-          style={{
-            fontSize: "18px",
-            marginLeft: "4px",
-            position: "relative",
-            bottom: "6px",
-          }}
-        >
-          .<strong>in</strong>
-        </span>
-      </div>
+    <div style={containerStyle}>
+      <Link to="/" style={logoBoxStyle}>
+        <img src={logo2} alt="Amazon Logo" style={{ width: "100px" }} />
+      </Link>
 
       <div
         style={{
-          width: "350px",
+          width: "100%",
+          maxWidth: "350px",
           margin: "0 auto",
           border: "1px solid #ddd",
           padding: "20px 26px",
           borderRadius: "8px",
+          boxSizing: "border-box",
         }}
       >
         <h2
@@ -106,13 +89,10 @@ const Register = () => {
         />
 
         {error && <p style={{ color: "red", fontSize: "12px" }}>{error}</p>}
-        
-       
-        
+
         <button onClick={handleRegister} style={buttonStyle}>
           Continue
         </button>
-        
 
         <p style={{ fontSize: "12px", marginTop: "15px" }}>
           By continuing, you agree to Amazon's <a href="#">Conditions of Use</a>{" "}
@@ -130,15 +110,22 @@ const Register = () => {
           <p>© 1996-2024, Amazon.com, Inc. or its affiliates</p>
         </div>
         <Link to="/login">
-          <button style={buttonsStyle}>
-            already have account
-          </button>
+          <button style={buttonsStyle}>already have account</button>
         </Link>
       </div>
     </div>
   );
 };
 
+const containerStyle = {
+  backgroundColor: "#fff",
+  minHeight: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "20px",
+};
 const inputStyle = {
   width: "100%",
   padding: "8px",
@@ -147,7 +134,11 @@ const inputStyle = {
   borderRadius: "4px",
   border: "1px solid #a6a6a6",
 };
-
+const logoBoxStyle = {
+  display: "flex",
+  justifyContent: "center",
+  marginBottom: "30px",
+};
 const labelStyle = {
   fontWeight: "bold",
   fontSize: "14px",
@@ -163,16 +154,16 @@ const buttonStyle = {
   fontWeight: "bold",
 };
 const buttonsStyle = {
-  width: "80%",
+  width: "100%",
   padding: "8px",
   backgroundColor: "#fff",
   border: "1px solid #a88734",
   borderRadius: "4px",
   cursor: "pointer",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
   fontWeight: "bold",
+  display: "block",
+  margin: "10px auto 0",
+  textAlign: "center",
 };
 
 export default Register;

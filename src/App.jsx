@@ -1,9 +1,11 @@
 import { Routes, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import Navbar from "./Components/Navbar";
 import NavbarBanner from "./Components/NavbarBanner";
 import Footer from "./Pages/Footer";
 import appRoutes from "./route";
 import BackToTop from "./Components/BackToTop";
+import ScrollToTop from "./animations/ScrollToTop";
 
 const App = () => {
   const location = useLocation();
@@ -15,9 +17,12 @@ const App = () => {
     <>
       {!hideLayout && <Navbar />}
       {!hideLayout && <NavbarBanner />}
-      
-      <Routes>{appRoutes}</Routes>
-
+      <ScrollToTop /> {/* لتأكيد التمرير لأعلى */}
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          {appRoutes}
+        </Routes>
+      </AnimatePresence>
       {!hideLayout && <BackToTop />}
       {!hideLayout && <Footer />}
     </>
